@@ -2,8 +2,9 @@ const inquirer = require("inquirer");
 const fs = require("fs");
 const { listenerCount } = require("process");
 
-//Develop team input using node and inquirer
+const employees = [];
 
+// Ask questions regarding team members
 const newEmployee = () => {
     console.log('Add new employee information.')
     return inquirer.prompt([
@@ -11,7 +12,7 @@ const newEmployee = () => {
             type: 'list',
             name: 'role',
             message: 'What is the employee role?',
-            choices: ['Intern', 'Engineer']
+            choices: ['Intern', 'Engineer', 'Manager']
         },
 
         {
@@ -32,6 +33,7 @@ const newEmployee = () => {
             message: 'What is the email of your employee?'
         },
 
+        // Asks this question when the Engineer class is chosen
         {
             type: 'input',
             name: 'github',
@@ -39,11 +41,20 @@ const newEmployee = () => {
             when: (input) => input.role === 'Engineer'
         },
 
+        // Asks this question when the Intern class is chosen
         {
             type: 'input',
             name: 'school',
             message: 'What is the school of your intern attends?',
             when: (input) => input.role === 'Intern'
+        },
+
+        // Asks this question when the Manager class is chosen
+        {
+            type: 'input',
+            name: 'office',
+            message: 'What is your office Number?',
+            when: (input) => input.role === 'Manager'
         },
 
         {
@@ -53,5 +64,21 @@ const newEmployee = () => {
             default: false
         },
     ])
+        .then(employeeData => {
+            let { name, id, email, role, github, school, addEmployee } = employeeData;
+            let employee;
 
+            if (role === 'Engineer') {
+                employee = new Engineer(name, id, email, github);
+                console.log(employee);
+            } else if (role === 'Intern') {
+                employee = new Intern(name, id, email, school)
+            }
+            //push employee into the team array
+
+            if (addEmployee) {
+                return
+            }
+
+        })
 }
