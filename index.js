@@ -1,11 +1,18 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
 const { listenerCount } = require("process");
+const Manager = require('./lib/manager');
+const Engineer = require('./lib/engineer');
+const Intern = require('./lib/intern');
 
-const employees = [];
+//Create new folder and html file with all the team members information; Source: https://arpadt.com/articles/path-join-vs-path-resolve-nodejs
+// const directory = path.resolve(__dirname, 'public');
+// const outputPath = path.join(directory, 'team-members.html');
+
+const employeesArray = [];
 
 // Ask questions regarding team members
-const newEmployee = () => {
+const newTeamMember = () => {
     console.log('Add new employee information.')
     return inquirer.prompt([
         {
@@ -64,21 +71,40 @@ const newEmployee = () => {
             default: false
         },
     ])
-        .then(employeeData => {
-            let { name, id, email, role, github, school, addEmployee } = employeeData;
+        .then(answers => {
+            let { name, id, email, role, github, school, office, addEmployee } = answers;
             let employee;
 
-            if (role === 'Engineer') {
-                employee = new Engineer(name, id, email, github);
+            if (role === 'Manager') {
+                employee = new Manager(name, id, email, office);
                 console.log(employee);
             } else if (role === 'Intern') {
-                employee = new Intern(name, id, email, school)
+                employee = new Intern(name, id, email, school);
+                console.log(employee);
+            } else if (role === 'Engineer') {
+                employee = new Engineer(name, id, email, github);
+                console.log(employee);
             }
             //push employee into the team array
+            employeesArray.push(employee);
 
             if (addEmployee) {
-                return
+                return newTeamMember(employeesArray);
+            } else {
+                return employeesArray;
             }
 
-        })
+        });
+
+
 }
+
+
+
+// TODO: Create a function to initialize app
+function init() {
+    inquirer.prompt(questions).then((data) => {
+        writeToFile("index.html", markdown(data));
+        // then (() => console.log("Congratulations!\nSuccessfully created and wrote new README.md file."))
+    })
+};
