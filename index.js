@@ -93,6 +93,7 @@ const newTeamMember = () => {
         });
 };
 
+//Develop HTML
 function generateHTML() {
     let html = `<!DOCTYPE html>
 <html lang="en">
@@ -138,6 +139,7 @@ function generateHTML() {
 </div>`;
     })
     employeesArray.engineer.foreach((engineersArrayElements) => {
+        // Addition assignment https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Addition_assignment
         html += `
         <div class="container">
     <div class="team-cards row">
