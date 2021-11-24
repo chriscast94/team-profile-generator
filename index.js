@@ -4,8 +4,14 @@ const { listenerCount } = require("process");
 const Manager = require('./lib/manager');
 const Engineer = require('./lib/engineer');
 const Intern = require('./lib/intern');
+//const generateMarkdown = require('./dist/generateMarkdown')
 
 const employeesArray = [];
+
+//Add below
+const managers = [];
+const interns = [];
+const engineers = [];
 
 // Ask questions regarding team members
 const newTeamMember = () => {
@@ -70,19 +76,29 @@ const newTeamMember = () => {
         .then(answers => {
             let { name, id, email, role, github, school, office, addEmployee } = answers;
             let employee;
-
+            //--------------------------------------------------------------------------
             if (role === 'Manager') {
                 employee = new Manager(name, id, email, office);
-                console.log(employee);
+                //push into managers array
+                managers.push(employee);
+                console.log(managers);
+                //--------------------------------------------------------------------------
             } else if (role === 'Intern') {
                 employee = new Intern(name, id, email, school);
-                console.log(employee);
+                // push into intern array
+                interns.push(employee);
+                console.log(interns);
+                //--------------------------------------------------------------------------
             } else if (role === 'Engineer') {
                 employee = new Engineer(name, id, email, github);
-                console.log(employee);
+                //push into engineer array?
+                engineers.push(employee);
+                console.log(engineers);
             }
             //push employee into the team array
+            //necessary if above changes made?
             employeesArray.push(employee);
+            console.log('Pushed into employee array');
 
             if (addEmployee) {
                 return newTeamMember(employeesArray);
@@ -93,8 +109,9 @@ const newTeamMember = () => {
         });
 };
 
-//Develop HTML
+// Develop HTML
 function generateHTML() {
+    console.log("GenerateHTML Entry for:", employeesArray);
     let html = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -119,71 +136,82 @@ function generateHTML() {
         <div class="team-cards row">
             <div class="card">
                 <div class="card-body">`
-
-    employeesArray.manager.foreach((managersArrayElements) => {
+    //---------------------Manager Section--------------------------------
+    console.log("Manager is present");
+    managers.forEach((managerElement) => {
         html += `
-                    <div class="container">
+                <div class="container">
+<div class="team-cards row">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">${managerElement.getName()}</h4>
+            <h5 class="card-subtitle mb-2 text-muted">${managerElement.getRole()}</h5>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">ID: ${managerElement.getId()}</li>
+                <li class="list-group-item">Email: ${managerElement.getEmail()}</li>
+                <li class="list-group-item">Office Number: ${managerElement.getOffice()}</li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div>`;
+    })
+
+    //----------------------Engineer Section --------------------------------
+    console.log("Engineer is present");
+    engineers.forEach((engineerElement) => {
+        html += `
+        <div class="container">
     <div class="team-cards row">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">${managersArrayElements.grabName()}</h4>
-                <h5 class="card-subtitle mb-2 text-muted">${managersArrayElements.grabRole()}</h5>
+                <h4 class="card-title">${engineerElement.getName()}</h4>
+                <h5 class="card-subtitle mb-2 text-muted">${engineerElement.getRole()}</h5>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">ID: ${managersArrayElements.grabId()}</li>
-                    <li class="list-group-item">Email: ${managersArrayElements.grabEmail()}</li>
-                    <li class="list-group-item">Office Number: ${managersArrayElements.grabOffice()}</li>
+                    <li class="list-group-item">ID: ${engineerElement.getId()}</li>
+                    <li class="list-group-item">Email: ${engineerElement.getEmail()}</li>
+                    <li class="list-group-item">Github: ${engineerElement.getGithub()}</li>
                 </ul>
             </div>
         </div>
     </div>
 </div>`;
     })
-    employeesArray.engineer.foreach((engineersArrayElements) => {
-        // Addition assignment https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Addition_assignment
-        html += `
-        <div class="container">
-    <div class="team-cards row">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">${engineersArrayElements.grabName()}</h4>
-                <h5 class="card-subtitle mb-2 text-muted">${engineersArrayElements.grabRole()}</h5>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">ID: ${engineersArrayElements.grabId()}</li>
-                    <li class="list-group-item">Email: ${engineersArrayElements.grabEmail()}</li>
-                    <li class="list-group-item">Github: ${engineersArrayElements.grabGithub()}</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>`;
-    })
 
-    employeesArray.intern.foreach((internsArrayElements) => {
+    //-------------------------Intern Section--------------------------------------
+    console.log("Intern is present");
+    interns.forEach((internsElements) => {
         html += `
         <div class="container">
     <div class="team-cards row">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">${internsArrayElements.grabName()}</h4>
-                <h5 class="card-subtitle mb-2 text-muted">${internsArrayElements.grabRole()}</h5>
+                <h4 class="card-title">${internsElements.getName()}</h4>
+                <h5 class="card-subtitle mb-2 text-muted">${internsElements.getRole()}</h5>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">ID: ${internsArrayElements.grabId()}</li>
-                    <li class="list-group-item">Email: ${internsArrayElements.grabEmail()}</li>
-                    <li class="list-group-item">School: ${internsArrayElements.grabSchool()}</li>
+                    <li class="list-group-item">ID: ${internsElements.getId()}</li>
+                    <li class="list-group-item">Email: ${internsElements.getEmail()}</li>
+                    <li class="list-group-item">School: ${internsElements.getSchool()}</li>
                 </ul>
             </div>
         </div>
     </div>
-</div>`
+</div>
+</body>
+   </html>`;
+        fs.writeFileSync('./dist/index.html', generateHTML(answers))
+            .catch((err) => console.error(err));
+
     })
 }
 
 const init = () => {
+    console.log("Generated HTML");
     newTeamMember()
         // Use writeFileSync method to use promises instead of a callback function
-        .then((answers) => fs.writeFileSync('index.html', generateHTML(answers)))
-        .then(() => console.log('Successfully wrote to index.html'))
-        .catch((err) => console.error(err));
+        .then(() => console.log('Successfully wrote to index.html'));
 };
 
 init();
+
+// Addition assignment https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Addition_assignment
