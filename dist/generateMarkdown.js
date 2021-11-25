@@ -1,7 +1,6 @@
 
-//Develop HTML
 function generateHTML() {
-    console.log("GenerateHTML Entry for:", employeesArray);
+    //console.log("GenerateHTML Entry for:", employeesArray);
     let html = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,41 +25,42 @@ function generateHTML() {
         <div class="team-cards row">
             <div class="card">
                 <div class="card-body">`
-    //identifier will need to change
+    //----------------------------------Manager Section-----------------------------------------------------------------------
     console.log("Manager is present");
     managers.forEach((managerElement) => {
         html += `
-                    <div class="container">
-    <div class="team-cards row">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">${managerElement.getName()}</h4>
-                <h5 class="card-subtitle mb-2 text-muted">${managerElement.getRole()}</h5>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">ID: ${managerElement.getID()}</li>
-                    <li class="list-group-item">Email: ${managerElement.getEmail()}</li>
-                    <li class="list-group-item">Office Number: ${managerElement.getOffice()}</li>
-                </ul>
-            </div>
+                <div class="container">
+<div class="team-cards row">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">${managerElement.getName()}</h4>
+            <h5 class="card-subtitle mb-2 text-muted">${managerElement.getRole()}</h5>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">ID: ${managerElement.getId()}</li>
+                <li class="list-group-item">Email: ${managerElement.getEmail()}</li>
+                <li class="list-group-item">Office Number: ${managerElement.getOffice()}</li>
+            </ul>
         </div>
     </div>
+</div>
 </div>`;
     })
 
+    //--------------------------------------Engineer Section ----------------------------------------------------------
+
     console.log("Engineer is present");
-    employeesArray.forEach((engineersArrayElements) => {
-        // Addition assignment https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Addition_assignment
+    engineerssArray.forEach((engineerElement) => {
         html += `
         <div class="container">
     <div class="team-cards row">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">${engineersArrayElements.grabName()}</h4>
-                <h5 class="card-subtitle mb-2 text-muted">${engineersArrayElements.grabRole()}</h5>
+                <h4 class="card-title">${engineerElement.getName()}</h4>
+                <h5 class="card-subtitle mb-2 text-muted">${engineerElement.getRole()}</h5>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">ID: ${engineersArrayElements.grabId()}</li>
-                    <li class="list-group-item">Email: ${engineersArrayElements.grabEmail()}</li>
-                    <li class="list-group-item">Github: ${engineersArrayElements.grabGithub()}</li>
+                    <li class="list-group-item">ID: ${engineerElement.getId()}</li>
+                    <li class="list-group-item">Email: ${engineerElement.getEmail()}</li>
+                    <li class="list-group-item">Github: ${engineerElement.getGithub()}</li>
                 </ul>
             </div>
         </div>
@@ -68,26 +68,31 @@ function generateHTML() {
 </div>`;
     })
 
-
-    if (employeesArray.indexOf("Intern") > -1) {
-        console.log("Intern is present");
-        employeesArray.forEach((internsArrayElements) => {
-            html += `
+    //----------------------------------------Intern Section--------------------------------------------------------
+    console.log("Intern is present");
+    internsArray.forEach((internsElements) => {
+        html += `
         <div class="container">
     <div class="team-cards row">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">${internsArrayElements.grabName()}</h4>
-                <h5 class="card-subtitle mb-2 text-muted">${internsArrayElements.grabRole()}</h5>
+                <h4 class="card-title">${internsElements.getName()}</h4>
+                <h5 class="card-subtitle mb-2 text-muted">${internsElements.getRole()}</h5>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">ID: ${internsArrayElements.grabId()}</li>
-                    <li class="list-group-item">Email: ${internsArrayElements.grabEmail()}</li>
-                    <li class="list-group-item">School: ${internsArrayElements.grabSchool()}</li>
+                    <li class="list-group-item">ID: ${internsElements.getId()}</li>
+                    <li class="list-group-item">Email: ${internsElements.getEmail()}</li>
+                    <li class="list-group-item">School: ${internsElements.getSchool()}</li>
                 </ul>
             </div>
         </div>
     </div>
-</div>`
-        })
-    }
+</div>
+</body>
+   </html>`;
+
+    })
 }
+
+generateHTML();
+
+module.exports

@@ -4,14 +4,17 @@ const { listenerCount } = require("process");
 const Manager = require('./lib/manager');
 const Engineer = require('./lib/engineer');
 const Intern = require('./lib/intern');
-//const generateMarkdown = require('./dist/generateMarkdown')
+//const generateMarkdown = require('./dist/generateMarkdown');
 
+//Arrays of all employees
 const employeesArray = [];
 
-//Add below
+//Arrays of employees
 const managers = [];
 const interns = [];
 const engineers = [];
+
+
 
 // Ask questions regarding team members
 const newTeamMember = () => {
@@ -109,7 +112,7 @@ const newTeamMember = () => {
         });
 };
 
-// Develop HTML
+// //Develop HTML
 function generateHTML() {
     console.log("GenerateHTML Entry for:", employeesArray);
     let html = `<!DOCTYPE html>
@@ -137,7 +140,7 @@ function generateHTML() {
             <div class="card">
                 <div class="card-body">`
     //---------------------Manager Section--------------------------------
-    console.log("Manager is present");
+    console.log(managers);
     managers.forEach((managerElement) => {
         html += `
                 <div class="container">
@@ -158,7 +161,7 @@ function generateHTML() {
     })
 
     //----------------------Engineer Section --------------------------------
-    console.log("Engineer is present");
+    console.log(engineers);
     engineers.forEach((engineerElement) => {
         html += `
         <div class="container">
@@ -179,7 +182,7 @@ function generateHTML() {
     })
 
     //-------------------------Intern Section--------------------------------------
-    console.log("Intern is present");
+    console.log(interns);
     interns.forEach((internsElements) => {
         html += `
         <div class="container">
@@ -197,21 +200,29 @@ function generateHTML() {
         </div>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 </body>
    </html>`;
-        fs.writeFileSync('./dist/index.html', generateHTML(answers))
-            .catch((err) => console.error(err));
+        fs.writeFileSync('./dist/index.html', html, (err) => {
+            console.error(err);
+        })
 
     })
 }
 
 const init = () => {
-    console.log("Generated HTML");
+    console.log("on load");
     newTeamMember()
-        // Use writeFileSync method to use promises instead of a callback function
-        .then(() => console.log('Successfully wrote to index.html'));
+        .then(() => {
+            generateHTML();
+            console.log('Successfully wrote to index.html')
+        })
+    // .then(() => console.log("Created team members"))
+    // generatehtml function after newTeamMember
 };
 
 init();
+
 
 // Addition assignment https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Addition_assignment
