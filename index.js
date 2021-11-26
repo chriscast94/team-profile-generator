@@ -151,7 +151,7 @@ function generateHTML() {
             <h5 class="card-subtitle mb-2 text-muted">${managerElement.getRole()}</h5>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">ID: ${managerElement.getId()}</li>
-                <li class="list-group-item">Email: ${managerElement.getEmail()}</li>
+                <li class="list-group-item">Email:<a href="mailto:${managerElement.getEmail()}">${managerElement.getEmail()}</a></li>
                 <li class="list-group-item">Office Number: ${managerElement.getOffice()}</li>
             </ul>
         </div>
@@ -173,7 +173,7 @@ function generateHTML() {
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">ID: ${engineerElement.getId()}</li>
                     <li class="list-group-item">Email: ${engineerElement.getEmail()}</li>
-                    <li class="list-group-item">Github: ${engineerElement.getGithub()}</li>
+                    <li class="list-group-item">Github:<a href="https://github.com/${engineerElement.getGithub()}" target="_blank">${engineerElement.getGithub()}</a></li>
                 </ul>
             </div>
         </div>
